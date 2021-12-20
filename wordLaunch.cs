@@ -2,10 +2,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 
-
-namespace UnitTestProject2
+namespace UnitTestProject1
 {
     [TestClass]
     public class UnitTest1
@@ -16,18 +17,21 @@ namespace UnitTestProject2
             String wadPath = "C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe";
             ProcessStartInfo startInfo = new ProcessStartInfo(wadPath);
             Process wadProcess = Process.Start(startInfo);
-            String notepadPath = "C:\\windows\\system32\\notepad.exe";
-            WindowsDriver<WindowsElement> notepadSession;
+
+            String wordPath = "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.exe";
+            WindowsDriver<WindowsElement> wordSession;
             AppiumOptions desiredCapabilities = new AppiumOptions();
             desiredCapabilities
-                .AddAdditionalCapability("app", notepadPath);
-            notepadSession = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723/"), desiredCapabilities);
-            notepadSession.FindElementByName("Edit").Click();
-            notepadSession.FindElementByAccessibilityId("26").Click();
-            wadProcess.Kill();
-            
-           
-            
+                .AddAdditionalCapability("app", wordPath);
+            wordSession = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723/"), desiredCapabilities);
+            //var currentWindowHandle = wordSession.CurrentWindowHandle;
+            ////wordSession.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            //var allWindowHandles = wordSession.WindowHandles;
+            //wordSession.SwitchTo().Window(allWindowHandles[1]);
+            wordSession.FindElementByName("Blank document").Click();
+            //Thread.Sleep(3000);
+            //wadProcess.Kill();
         }
+       
     }
 }
